@@ -1,0 +1,4 @@
+﻿
+vytvořit třídu pro dialogy a vypisovat je jako "Windows"
+dialogy mají být instance
+dodělat editor + select
