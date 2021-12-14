@@ -54,7 +54,7 @@ namespace MyMidnightCommander.Dialogues
                 UI.UsedDialog = new DummyDialogue();
                 UI.DialogIsOn = false;
             }
-            else if (info.Key == ConsoleKey.Enter) //last option isn't selected
+            else if (info.Key == ConsoleKey.Enter) //last option isn't selected ok!!
             {
                 if (SelectedItem == 0)
                     DeleteFunc.HandleDelete(Path, IsFolder);
