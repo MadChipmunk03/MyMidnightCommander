@@ -11,7 +11,7 @@ namespace MyMidnightCommander.Window
     {
         protected List<IComponents> components = new List<IComponents>();
 
-        public virtual void ReadKey(ConsoleKeyInfo info)
+        public void ReadKey(ConsoleKeyInfo info)
         {
             foreach (IComponents item in components)
             {
@@ -19,7 +19,7 @@ namespace MyMidnightCommander.Window
             }
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
             foreach(IComponents item in components)
             {

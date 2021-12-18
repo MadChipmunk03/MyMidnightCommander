@@ -13,20 +13,24 @@ namespace MyMidnightCommander
     public class UI
     {
         public static bool DialogIsOn {get; set;}
+        public static bool UpdateWindow { get; set; }
         public static Windows Window { get; set; }
         public static Dialog UsedDialog { get; set; }
 
         public static void Draw()
         {
-            Window.Draw();
-            UsedDialog.Draw();
+            if(!DialogIsOn)
+                Window.Draw();
+            else
+                UsedDialog.Draw();
         }
 
         public static void HandleKey(ConsoleKeyInfo info)
         {
             if(!DialogIsOn)
                 Window.ReadKey(info);
-            UsedDialog.ReadKey(info);
+            else
+                UsedDialog.ReadKey(info);
         }
     }
 }

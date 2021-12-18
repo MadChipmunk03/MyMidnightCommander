@@ -8,7 +8,6 @@ namespace MyMidnightCommander.Dialogues
 {
     public abstract class Dialog
     {
-
         public virtual void ReadKey(ConsoleKeyInfo info)
         {
             

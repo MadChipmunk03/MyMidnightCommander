@@ -8,15 +8,20 @@ using MyMidnightCommander.Dialogues;
 
 namespace MyMidnightCommander.Dialogues
 {
-    public class InfoDialogue : IDialog
+    public class InfoDialogue : Dialog
     {
-        public static bool IsActive { get; set; }
-        public static string Message { get; set; }
+        public bool IsActive { get; set; }
+        public string Message { get; set; }
 
         private int DialogueHeight = 10;
         private int DialogueWidth = 50;
 
-        public void Draw()
+        public InfoDialogue(string message)
+        {
+            Message = message;
+        }
+
+        public override void Draw()
         {
             string message = Message;
 
@@ -43,7 +48,7 @@ namespace MyMidnightCommander.Dialogues
             for(int dRow = 0; dRow < DialogueHeight; dRow++)
             {
                 Console.SetCursorPosition(startX, startY + dRow);
-                if(dRow == 0 ||  dRow == DialogueHeight - 1)
+                if (dRow == 0 || dRow == DialogueHeight - 1)
                     for (int dChar = 0; dChar < DialogueWidth; dChar++)
                         Console.Write(' ');
                 else if (dRow == DialogueHeight - 3 || dRow == 2)
@@ -73,37 +78,23 @@ namespace MyMidnightCommander.Dialogues
                     Console.Write("┘ ");
                 }
                 else
-                    message = WriteErrorMsgLines(dRow - 3, message);
+                {
+                    Console.Write(" │");
+                    if (message.Length < 42)
+                        Console.Write("  " + message.Substring(0, message.Length % 42 - 2).PadRight(DialogueWidth - 8) + "  ");
+                    else
+                    {
+                        Console.Write("  " + message.Substring(0, 42) + "  ");
+                        message = message.Substring(42, message.Length - 42);
+                    }
+                    Console.Write("│ ");
+                }
             }
         }
 
-        private string WriteErrorMsgLines(int lineNumber, string message)
+        public void ReadKey()
         {
-            Console.Write(" │");
-            if(message.Length < 42)
-                Console.Write("  " + message.Substring(0, message.Length % 42 - 2).PadRight(DialogueWidth - 8) + "  ");
-            else
-            {
-                Console.Write("  " + message.Substring(0, 42) + "  ");
-                message = message.Substring(42, message.Length - 42);
-            }
-            Console.Write("│ ");
 
-            return message;
-        }
-
-        public bool ReadKey(ConsoleKeyInfo info)
-        {
-            if (!IsActive)
-                return true;
-
-            if (info.Key == ConsoleKey.Escape)
-            {
-                IsActive = false;
-                return true;
-            }
-
-            return false;
         }
     }
 }

@@ -38,5 +38,15 @@ namespace MyMidnightCommander.Functions
                     subDir.Delete();
             }
         }
+
+        /*public static int GetSourceTrimLenght(string source)
+        {
+            string[] sourceParts = source.Split('\\');
+            int sourceTrimLenght = 0;
+            for (int i = 0; i < sourceParts.Length - 1; i++)
+                sourceTrimLenght += sourceParts[i].Length + 1;
+
+            return sourceTrimLenght;
+        }*/
     }
 }

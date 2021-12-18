@@ -13,9 +13,10 @@ namespace MyMidnightCommander
         public bool IsActive { get; set; }
         public List<string> MenuBarItems = new List<string>();
 
-        public MenuBar()
+        public MenuBar(string[] menuBarItems)
         {
-            
+            foreach (string item in menuBarItems)
+                MenuBarItems.Add(item);
         }
 
         public void Draw()

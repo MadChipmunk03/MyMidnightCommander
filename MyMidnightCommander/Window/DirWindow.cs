@@ -9,51 +9,21 @@ namespace MyMidnightCommander.Window
 {
     public class DirWindow : Windows
     {
-        public bool ComponentsAreActive { get; set; } = true;
-
-        private List<IDialog> myDialogues = new List<IDialog>();
         public DirWindow()
         {
-            //Dir components
             MyDirectory rightDirectory = new MyDirectory(MyDirectory.RightDirectory);
             components.Add(rightDirectory);
 
             MyDirectory leftDirectory = new MyDirectory(MyDirectory.LeftDirectory);
             components.Add(leftDirectory);
 
-            FunctionKeysLabels myFKL = new FunctionKeysLabels();
-            myFKL.FKLItems.Add("POMOC!");
-            myFKL.FKLItems.Add("MkDir");
-            myFKL.FKLItems.Add("Rename");
-            myFKL.FKLItems.Add("Move");
-            myFKL.FKLItems.Add("Copy");
-            myFKL.FKLItems.Add("Delete");
-            myFKL.FKLItems.Add("Open");
-            myFKL.FKLItems.Add("EXIT");
+            string[] fklLabels = { "POMOC!", "MkDir", "Rename" , "Move" , "Copy" , "Delete" , "Open" , "EXIT" };
+            FunctionKeysLabels myFKL = new FunctionKeysLabels(fklLabels);
             components.Add(myFKL);
 
-            MenuBar myMenuBar = new MenuBar();
-            myMenuBar.MenuBarItems.Add("Left");
-            myMenuBar.MenuBarItems.Add("File");
-            myMenuBar.MenuBarItems.Add("Command");
-            myMenuBar.MenuBarItems.Add("Right");
+            string[] menuBarItems = { "Left", "File", "Command", "Right" };
+            MenuBar myMenuBar = new MenuBar(menuBarItems);
             components.Add(myMenuBar);
-
-            //dialogues
-            /*InfoDialogue myInfoDialogue = new InfoDialogue();
-            myDialogues.Add(myInfoDialogue);*/
-            ChoiceBox myChoiceBox = new ChoiceBox();
-            myDialogues.Add(myChoiceBox);
-        }
-
-        public override void Draw()
-        {
-            base.Draw();
-        }
-
-        public override void ReadKey(ConsoleKeyInfo info)
-        {
-             base.ReadKey(info);
         }
     }
 }

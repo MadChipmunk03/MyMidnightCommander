@@ -43,21 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Editor.cs" />
-    <Compile Include="Dialogues\DailogTemplates\ChoiceBoxTemplate.cs" />
-    <Compile Include="Dialogues\DeleteChoiceBox.cs" />
-    <Compile Include="Dialogues\ChoiceBox.cs" />
+    <Compile Include="Components\EditorComponents\Editor.cs" />
+    <Compile Include="Components\EditorComponents\EditorStaticticsBar.cs" />
+    <Compile Include="Dialogues\DialogTemplates\ChoiceBoxTemplate.cs" />
+    <Compile Include="Dialogues\DirDialogues\MoveDialogue.cs" />
+    <Compile Include="Dialogues\DirDialogues\CopyDialogue.cs" />
+    <Compile Include="Dialogues\DirDialogues\DeleteDialogue.cs" />
+    <Compile Include="Dialogues\Rubbish\ChoiceBox.cs" />
     <Compile Include="Dialogues\Dialog.cs" />
     <Compile Include="Dialogues\DummyDialogue.cs" />
-    <Compile Include="Dialogues\IDialog.cs" />
     <Compile Include="Dialogues\InfoDialogue.cs" />
-    <Compile Include="Dialogues\InputDialogue.cs" />
+    <Compile Include="Dialogues\DialogTemplates\InputDialogueTemplate.cs" />
     <Compile Include="Components\FunctionKeysLabels.cs" />
     <Compile Include="Components\IComponents.cs" />
-    <Compile Include="Components\MyDirectory.cs" />
-    <Compile Include="Components\MenuBar.cs" />
+    <Compile Include="Components\DirComponents\MyDirectory.cs" />
+    <Compile Include="Components\DirComponents\MenuBar.cs" />
+    <Compile Include="Dialogues\DirDialogues\MkDirDialogue.cs" />
     <Compile Include="EditorFolder\Functions\Selection.cs" />
     <Compile Include="EditorFolder\Functions\EditorSave.cs" />
+    <Compile Include="Functions\MoveFunc.cs" />
+    <Compile Include="Functions\CopyFunc.cs" />
     <Compile Include="Functions\DeleteFunc.cs" />
     <Compile Include="Functions\FuncSupportMethods.cs" />
     <Compile Include="Program.cs" />

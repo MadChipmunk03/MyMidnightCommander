@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyMidnightCommander.Dialogues;
+using MyMidnightCommander.Dialogues.DialogTemplates;
 using MyMidnightCommander.Functions;
 
-namespace MyMidnightCommander.Dialogues
+namespace MyMidnightCommander.Dialogues.DirDialogues
 {
-    public class DeleteChoiceBox : Dialog
+    public class DeleteDialogue : Dialog
     {
-        private string Title { get; set; }
+        private string Title { get; set; } = "Smazat";
         private string Text { get; set; }
-        private string[] Buttons { get; set; }
+        private string[] Buttons { get; set; } = { "Ok", "Cancel" };
         private string Path { get; set; }
         private bool IsFolder { get; set; }
         private int BtnsInRowTotalLenght { get; set; } = 0;
         public int SelectedItem { get; set; } = 0;
 
-        public DeleteChoiceBox(string title, string text, string[] buttons, string method, string path, bool isFolder)
+        public DeleteDialogue(string text, string path, bool isFolder)
         {
-            Title = title;
             Text = text;
-            Buttons = buttons;
 
             //formatting Buttons + getting their lenght when lined up in row
             BtnsInRowTotalLenght = 0;
@@ -52,16 +50,14 @@ namespace MyMidnightCommander.Dialogues
             else if (info.Key == ConsoleKey.Escape)
             {
                 UI.UsedDialog = new DummyDialogue();
-                UI.DialogIsOn = false;
             }
-            else if (info.Key == ConsoleKey.Enter) //last option isn't selected ok!!
+            else if (info.Key == ConsoleKey.Enter) //last option isn't selected
             {
                 if (SelectedItem == 0)
                     DeleteFunc.HandleDelete(Path, IsFolder);
                 else if (SelectedItem == 1);
 
                 UI.UsedDialog = new DummyDialogue();
-                UI.DialogIsOn = false;
             }
         }
     }

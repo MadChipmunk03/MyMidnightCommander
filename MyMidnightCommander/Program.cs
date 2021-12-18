@@ -12,7 +12,7 @@ namespace MyMidnightCommander
 {
     class Program
     {
-        public static bool ProgramIsOn { get; set; }
+        public static bool ProgramIsOn { get; set; } = true;
 
         static void Main(string[] args)
         {
@@ -27,7 +27,7 @@ namespace MyMidnightCommander
             t.Start();*/
 
             Console.CursorVisible = false;
-            while (true)
+            while (ProgramIsOn)
             {
                 UI.Draw();
 

@@ -7,6 +7,7 @@ using System.IO;
 using MyMidnightCommander.Window;
 using MyMidnightCommander.EditorFolder.Functions;
 using MyMidnightCommander.Dialogues;
+using MyMidnightCommander.Components.EditorComponents;
 
 namespace MyMidnightCommander.Components
 {
@@ -44,6 +45,9 @@ namespace MyMidnightCommander.Components
 
         public void Draw()
         {
+            EditorStaticticsBar.Draw(FilePath, SelCharX1, TopRow, SelCharY1, myLinesOfFileText.Count);
+            Console.ForegroundColor = ConsoleColor.White;
+
             XOnLine = SelCharX1;
 
             int editorHeight = myLinesOfFileText.Count;
@@ -87,7 +91,7 @@ namespace MyMidnightCommander.Components
                 Console.Write("".PadRight(Console.WindowWidth));
             }
 
-            DrawStats();
+            //DrawStats();
 
             Console.SetCursorPosition(XOnLine - ShiftLenght, SelCharY1 - TopRow);
             Console.CursorVisible = true;
@@ -150,7 +154,7 @@ namespace MyMidnightCommander.Components
 
         public void ReadKey(ConsoleKeyInfo info)
         {
-            if(info.Key == ConsoleKey.DownArrow)
+            if(info.Key == ConsoleKey.DownArrow) //SelCharY1 == cursorY; TopRow == minusLine
             {
                 if(SelCharY1 < myLinesOfFileText.Count)
                 {

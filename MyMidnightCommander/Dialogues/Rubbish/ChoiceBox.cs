@@ -8,7 +8,7 @@ using MyMidnightCommander.Functions;
 
 namespace MyMidnightCommander.Dialogues
 {
-    public class ChoiceBox : IDialog
+    public class ChoiceBox
     {
         public static string Method { get; set; }
         public static bool IsActive { get; set; }

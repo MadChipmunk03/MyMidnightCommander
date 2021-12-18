@@ -8,6 +8,10 @@ namespace MyMidnightCommander.Dialogues
 {
     public class DummyDialogue : Dialog
     {
-
+        public DummyDialogue()
+        {
+            UI.DialogIsOn = false;
+            UI.Window.Draw();
+        }
     }
 }

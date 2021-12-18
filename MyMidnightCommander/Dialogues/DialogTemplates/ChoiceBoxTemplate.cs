@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MyMidnightCommander.Dialogues;
 using MyMidnightCommander.Functions;
 
-namespace MyMidnightCommander.Dialogues
+namespace MyMidnightCommander.Dialogues.DialogTemplates
 {
     public static class ChoiceBoxTemplate
     {

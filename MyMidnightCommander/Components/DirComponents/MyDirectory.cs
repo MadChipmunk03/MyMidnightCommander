@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using MyMidnightCommander.Components;
+using MyMidnightCommander.Dialogues.DirDialogues;
 using MyMidnightCommander.Dialogues;
 using MyMidnightCommander.Window;
 
@@ -314,6 +315,31 @@ namespace MyMidnightCommander
             {
                 IsSelectedDir = !IsSelectedDir;
             }
+            else if (info.Key == ConsoleKey.F5) //Copy
+            {
+                if (IsSelectedDir)
+                {
+                    string selectedItem = DirItemNames[SelectedRow];
+                    if (selectedItem == "\\..") // if parent dir is selected
+                        CopyDialogue.SourcePath = DirPath;
+                    else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
+                        CopyDialogue.SourcePath = DirPath + selectedItem;
+                    else // file is selected
+                        CopyDialogue.SourcePath = DirPath + '\\' + selectedItem.Substring(1, selectedItem.Length - 1);
+                    UI.UsedDialog = new CopyDialogue();
+                    UI.DialogIsOn = true;
+                }
+                else
+                {
+                    string selectedItem = DirItemNames[SelectedRow];
+                    if (selectedItem == "\\..") // if parent dir is selected
+                        CopyDialogue.DestinationPath = DirPath;
+                    else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
+                        CopyDialogue.DestinationPath = DirPath + selectedItem;
+                    else // file is selected
+                        CopyDialogue.DestinationPath = DirPath;
+                }
+            }
             else if (IsSelectedDir)
             {
                 if (info.Key == ConsoleKey.Enter)
@@ -353,8 +379,8 @@ namespace MyMidnightCommander
                             return;
                         else
                         {
-                            InfoDialogue.Message = errorMessage;
-                            InfoDialogue.IsActive = true;
+                            UI.UsedDialog = new InfoDialogue(errorMessage);
+                            UI.DialogIsOn = true;
                         }
                     }
                     else if (DirItemNames[SelectedRow].Substring(0, 1) == "\\")
@@ -371,8 +397,8 @@ namespace MyMidnightCommander
                             return;
                         else
                         {
-                            InfoDialogue.Message = errorMessage;
-                            InfoDialogue.IsActive = true;
+                            UI.UsedDialog = new InfoDialogue(errorMessage);
+                            UI.DialogIsOn = true;
                         }
                     }
                     else
@@ -400,21 +426,24 @@ namespace MyMidnightCommander
                             TopRow += 1;
                     }
                 }
-                else if (info.Key == ConsoleKey.F6)
+                else if (info.Key == ConsoleKey.F2) //MkDir
                 {
-                    string[] buttons = { "Ok", "Cancel" };
-
+                    UI.UsedDialog = new MkDirDialogue(DirPath);
+                    UI.DialogIsOn = true;
+                }
+                else if (info.Key == ConsoleKey.F6) //Delete
+                {
                     string selectedItem = DirItemNames[SelectedRow];
                     if (selectedItem == "\\..") // if parent dir is selected
-                        UI.UsedDialog = new DeleteChoiceBox("Smazat", $"opravdu si přejete smazat složku: {DirItemNames[SelectedRow]}", buttons, "Delete", DirPath, true);
+                        UI.UsedDialog = new DeleteDialogue($"opravdu si přejete smazat složku: {selectedItem}",  DirPath, true);
                     else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
-                        UI.UsedDialog = new DeleteChoiceBox("Smazat", $"opravdu si přejete smazat složku: {DirItemNames[SelectedRow]}", buttons, "Delete", DirPath + '\\' + DirItemNames[SelectedRow], true);
+                        UI.UsedDialog = new DeleteDialogue($"opravdu si přejete smazat složku: {selectedItem}",  DirPath + '\\' + selectedItem, true);
                     else // file is selected
-                        UI.UsedDialog = new DeleteChoiceBox("Smazat", $"opravdu si přejete smazat soubor: {DirItemNames[SelectedRow]}", buttons, "Delete", DirPath + '\\' + DirItemNames[SelectedRow].Substring(1, DirItemNames[SelectedRow].Length - 1), false);
+                        UI.UsedDialog = new DeleteDialogue($"opravdu si přejete smazat soubor: {selectedItem}",  DirPath + '\\' + selectedItem.Substring(1, selectedItem.Length - 1), false);
 
                     UI.DialogIsOn = true;
                 }
-                else if (info.Key == ConsoleKey.F7)
+                else if (info.Key == ConsoleKey.F7) // Open
                 {
                     string selectedItem = DirItemNames[SelectedRow];
                     if (selectedItem.Substring(0, 1) == " ")

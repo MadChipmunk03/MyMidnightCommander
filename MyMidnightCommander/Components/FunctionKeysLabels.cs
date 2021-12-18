@@ -14,11 +14,11 @@ namespace MyMidnightCommander
         public string[] Args { get; set; }
         public bool IsActive { get; set; } = true;
 
-        public int PressedFunction { get; set; } = 0; // 0 = nothing was pressed
         public List<string> FKLItems = new List<string>();
-        public FunctionKeysLabels()
+        public FunctionKeysLabels(string[] fklItem)
         {
-            
+            foreach (string item in fklItem)
+                FKLItems.Add(item);
         }
 
         public void Draw()
@@ -47,32 +47,12 @@ namespace MyMidnightCommander
         {
             if (info.Key == ConsoleKey.F1) //Help
             {
-                InfoDialogue.Message = "Tato funkce ještě nebyla přidána!  ";
-                InfoDialogue.IsActive = true;
+                UI.UsedDialog = new InfoDialogue("Tato funkce jeětě nebyla přidána  ");
+                UI.DialogIsOn = true;
             }
-            else if (info.Key == ConsoleKey.F2) //MkDir
+            else if (info.Key == ConsoleKey.F8) //EXIT
             {
-
-            }
-            else if (info.Key == ConsoleKey.F3) //Rename
-            {
-                
-            }
-            else if (info.Key == ConsoleKey.F4) //Move
-            {
-                PressedFunction = 4;
-            }
-            else if (info.Key == ConsoleKey.F5) //Copy
-            {
-                PressedFunction = 5;
-            }
-            else if (info.Key == ConsoleKey.F6) //Delete
-            {
-                PressedFunction = 6;
-            }
-            else if (info.Key == ConsoleKey.F7) //EXIT
-            {
-                PressedFunction = 7;
+                Program.ProgramIsOn = false;
             }
         }
 
@@ -83,26 +63,6 @@ namespace MyMidnightCommander
             Console.ReadKey();
         }*/
 
-        /*public void HandleMkDir(string path)
-        {
-            string[] inputLabels = { "Zadej název nové složky: " };
-            string[] inputVals = { "Nová BUM složka"};
-            string[] buttons = { "OK", "Cancel"};
-
-            List<string> MkDirVals = new List<string>();
-            MkDirVals = DrawInputDialogue("Vytvořit novou složku", inputLabels, inputVals, buttons);
-
-            if (MkDirVals[0] == "Cancel")
-                return;
-            else if (MkDirVals[0] == "OK")
-            {
-                DirectoryInfo myDirInfo = new DirectoryInfo(path + "\\" + MkDirVals[1]);
-                myDirInfo.Create();
-                return;
-            }
-
-            return;
-        }
         /*
         public void HandleRename(string path, string selectedItem)
         {
