@@ -24,7 +24,7 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
             string[] SPParts = SourcePath.Split('\\');
             if (SPParts[SPParts.Length - 1].Contains('.'))
             {
-                InputLabel = $"Kopírovat soubor \"{SPParts[SPParts.Length - 1].Substring(1, SPParts[SPParts.Length - 1].Length - 1)}\" na:";
+                InputLabel = $"Kopírovat soubor \"{SPParts[SPParts.Length - 1]}\" na:";
                 IsFolder = false;
             }
             else
@@ -65,7 +65,7 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
             }
             else if (info.Key == ConsoleKey.Escape)
                 UI.UsedDialog = new DummyDialogue();
-            else if (info.Key != ConsoleKey.F2) ; // filter out
+            else if (info.Key == ConsoleKey.F5) ; // filter out
             else
                 DestinationPath += info.KeyChar;
         }

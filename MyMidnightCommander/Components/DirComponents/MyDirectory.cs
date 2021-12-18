@@ -45,7 +45,7 @@ namespace MyMidnightCommander
             SelectedRow = 1;
             TopRow = 0;
 
-            DirPath = Directory.GetCurrentDirectory();
+            DirPath = @"C:\Users\Péťa\Documents\Git\Vs\MultiUSB";//Directory.GetCurrentDirectory()
 
             IsRightDirecory = isRightDirecory;
 
@@ -340,6 +340,31 @@ namespace MyMidnightCommander
                         CopyDialogue.DestinationPath = DirPath;
                 }
             }
+            else if (info.Key == ConsoleKey.F4) //Move
+            {
+                if (IsSelectedDir)
+                {
+                    string selectedItem = DirItemNames[SelectedRow];
+                    if (selectedItem == "\\..") // if parent dir is selected
+                        MoveDialogue.SourcePath = DirPath;
+                    else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
+                        MoveDialogue.SourcePath = DirPath + selectedItem;
+                    else // file is selected
+                        MoveDialogue.SourcePath = DirPath + '\\' + selectedItem.Substring(1, selectedItem.Length - 1);
+                    UI.UsedDialog = new MoveDialogue();
+                    UI.DialogIsOn = true;
+                }
+                else
+                {
+                    string selectedItem = DirItemNames[SelectedRow];
+                    if (selectedItem == "\\..") // if parent dir is selected
+                        MoveDialogue.DestinationPath = DirPath;
+                    else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
+                        MoveDialogue.DestinationPath = DirPath + selectedItem;
+                    else // file is selected
+                        MoveDialogue.DestinationPath = DirPath;
+                }
+            }
             else if (IsSelectedDir)
             {
                 if (info.Key == ConsoleKey.Enter)
@@ -429,6 +454,19 @@ namespace MyMidnightCommander
                 else if (info.Key == ConsoleKey.F2) //MkDir
                 {
                     UI.UsedDialog = new MkDirDialogue(DirPath);
+                    UI.DialogIsOn = true;
+                }
+                else if (info.Key == ConsoleKey.F3) // Rename
+                {
+                    string selectedItem = DirItemNames[SelectedRow];
+
+                    if (selectedItem == "\\..") // if parent dir is selected
+                        UI.UsedDialog = new RenameDialogue(DirPath);
+                    else if (selectedItem.Substring(0, 1) == "\\") // if folder is selected
+                        UI.UsedDialog = new RenameDialogue(DirPath + selectedItem);
+                    else // file is selected
+                        UI.UsedDialog = new RenameDialogue(DirPath + '\\' + selectedItem.Substring(1, selectedItem.Length - 1));
+
                     UI.DialogIsOn = true;
                 }
                 else if (info.Key == ConsoleKey.F6) //Delete

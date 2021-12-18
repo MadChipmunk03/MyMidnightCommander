@@ -1,4 +1,0 @@
-﻿
-
-rozdělit vše do více tříd
-

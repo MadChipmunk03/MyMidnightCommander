@@ -47,6 +47,7 @@
     <Compile Include="Components\EditorComponents\EditorStaticticsBar.cs" />
     <Compile Include="Dialogues\DialogTemplates\ChoiceBoxTemplate.cs" />
     <Compile Include="Dialogues\DirDialogues\MoveDialogue.cs" />
+    <Compile Include="Dialogues\DirDialogues\RenameDialogue.cs" />
     <Compile Include="Dialogues\DirDialogues\CopyDialogue.cs" />
     <Compile Include="Dialogues\DirDialogues\DeleteDialogue.cs" />
     <Compile Include="Dialogues\Rubbish\ChoiceBox.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Dialogues\DirDialogues\MkDirDialogue.cs" />
     <Compile Include="EditorFolder\Functions\Selection.cs" />
     <Compile Include="EditorFolder\Functions\EditorSave.cs" />
+    <Compile Include="Functions\RenameFunc.cs" />
     <Compile Include="Functions\MoveFunc.cs" />
     <Compile Include="Functions\CopyFunc.cs" />
     <Compile Include="Functions\DeleteFunc.cs" />
