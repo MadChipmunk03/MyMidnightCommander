@@ -45,10 +45,11 @@ namespace MyMidnightCommander.Components.EditorComponents
 
         public void Draw()
         {
-            EditorStaticticsBar.Draw(FilePath, SelCharX1, TopRow, SelCharY1, myLinesOfFileText.Count);
             Console.ForegroundColor = ConsoleColor.White;
 
             XOnLine = SelCharX1;
+            if (XOnLine > myLinesOfFileText[SelCharY1 - 1].Length)
+                XOnLine = myLinesOfFileText[SelCharY1 - 1].Length;
 
             int editorHeight = myLinesOfFileText.Count;
             if (editorHeight > Console.WindowHeight - 2)
@@ -58,9 +59,147 @@ namespace MyMidnightCommander.Components.EditorComponents
 
             if (SelCharY2 == 0) // if selection isn't selected
             {
-                for (int i = 0; i < editorHeight; i++)
+                DrawBasic(editorHeight);
+            }
+            else
+            {
+                DrawSelection(editorHeight);
+            }
+
+            for (int i = editorHeight + TopRow; i < Console.WindowHeight - 2 + TopRow; i++)
+            {
+                Console.SetCursorPosition(0, i + 1);
+                Console.Write("".PadRight(Console.WindowWidth));
+            }
+
+            DrawStats();
+            EditorStaticticsBar.Draw(FilePath, SelCharX1, TopRow, SelCharY1, myLinesOfFileText.Count);
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+
+            Console.SetCursorPosition(XOnLine - ShiftLenght, SelCharY1 - TopRow);
+            Console.CursorVisible = true;
+        }
+        public void DrawBasic(int editorHeight)
+        {
+            for (int i = 0; i < editorHeight; i++)
+            {
+                string selectedItem = "";
+                if (myLinesOfFileText[i + TopRow].Length <= ShiftLenght)
                 {
-                    string selectedItem = "";
+                    selectedItem = "";
+                }
+                else
+                    selectedItem = myLinesOfFileText[i + TopRow].Substring(ShiftLenght, myLinesOfFileText[i + TopRow].Length - ShiftLenght);
+
+                if (i == SelCharY1 - 1 && SelCharX1 > selectedItem.Length)
+                {
+                    XOnLine = selectedItem.Length;
+                }
+
+                Console.SetCursorPosition(0, i + 1);
+                if (selectedItem.Length > Console.WindowWidth)
+                    Console.Write(selectedItem.Substring(0, Console.WindowWidth));
+                else
+                    Console.Write(selectedItem.PadRight(Console.WindowWidth));
+            }
+        }
+
+        public void DrawPartOfLine(string line, int start, int end)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            if (line == "")
+            {
+                Console.Write("".PadRight(Console.WindowWidth));
+                return;
+            }
+            else
+            {
+                start -= ShiftLenght;
+                if (start < 0)
+                    start = 0;
+
+                end -= ShiftLenght;
+
+                char[] lettersOfLine = line.ToCharArray();
+                // before selection
+                for (int i = 0; i < start && i < lettersOfLine.Length; i++)
+                {
+                    Console.Write(lettersOfLine[i]);
+                }
+                Console.BackgroundColor = ConsoleColor.DarkCyan; // selection
+                for (int i = start; i <= end && i < lettersOfLine.Length; i++)
+                {
+                    Console.Write(lettersOfLine[i]);
+                }
+                Console.BackgroundColor = ConsoleColor.DarkBlue; // after selection
+                for (int i = end + 1; i < lettersOfLine.Length; i++)
+                {
+                    Console.Write(lettersOfLine[i]);
+                }
+                Console.Write("".PadRight(Console.WindowWidth - line.Length));
+            }
+        }
+
+        public void DrawSelection(int editorHeight)
+        {
+            for (int i = 0; i < editorHeight; i++)
+            {
+                string selectedItem = "";
+
+                if (myLinesOfFileText[i + TopRow].Length <= ShiftLenght)
+                    selectedItem = "";
+                else
+                    selectedItem = myLinesOfFileText[i + TopRow].Substring(ShiftLenght, myLinesOfFileText[i + TopRow].Length - ShiftLenght);
+
+                if (selectedItem.Length > Console.WindowWidth)
+                    selectedItem = selectedItem.Substring(0, Console.WindowWidth);
+
+                if (i + TopRow == SelCharY1 - 1 && SelCharY1 == SelCharY2) //it's on the same line
+                {
+                    if(SelCharX1 > SelCharX2) // selX1 is further
+                        DrawPartOfLine(selectedItem, SelCharX2, XOnLine);
+                    else // selX1 is closer
+                        DrawPartOfLine(selectedItem, XOnLine, SelCharX2);
+                }
+                else if(i + TopRow == SelCharY1 - 1)
+                {
+                    if (SelCharY1 > SelCharY2) // selY1 is bottom
+                        DrawPartOfLine(selectedItem, 0, SelCharX1);
+                    else //selY1 is top
+                        DrawPartOfLine(selectedItem, XOnLine, selectedItem.Length);
+                }
+                else if(i + TopRow == SelCharY2 - 1)
+                {
+                    if (SelCharY1 > SelCharY2) // selY2 is top
+                        DrawPartOfLine(selectedItem, SelCharX2, selectedItem.Length);
+                    else //selY2 is bottom
+                        DrawPartOfLine(selectedItem, 0, SelCharX2);
+                }
+                else if (i + TopRow > SelCharY1 - 1 && i + TopRow < SelCharY2 - 1 || i + TopRow < SelCharY1 - 1 && i + TopRow > SelCharY2 - 1)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkCyan;
+
+                    if (myLinesOfFileText[i + TopRow].Length <= ShiftLenght)
+                        selectedItem = "";
+                    else
+                        selectedItem = myLinesOfFileText[i + TopRow].Substring(ShiftLenght, myLinesOfFileText[i + TopRow].Length - ShiftLenght);
+
+                    if (i == SelCharY1 - 1 && SelCharX1 > selectedItem.Length)
+                        XOnLine = selectedItem.Length;
+
+                    Console.SetCursorPosition(0, i + 1);
+
+                    if (selectedItem.Length > Console.WindowWidth)
+                        Console.Write(selectedItem.Substring(0, Console.WindowWidth));
+                    else
+                    {
+                        Console.Write(selectedItem);
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.Write("".PadRight(Console.WindowWidth - selectedItem.Length));
+                    }
+                }
+                else
+                {
                     if (myLinesOfFileText[i + TopRow].Length <= ShiftLenght)
                     {
                         selectedItem = "";
@@ -79,52 +218,6 @@ namespace MyMidnightCommander.Components.EditorComponents
                     else
                         Console.Write(selectedItem.PadRight(Console.WindowWidth));
                 }
-            }
-            else
-            {
-                DrawSelection(editorHeight);
-            }
-
-            for (int i = editorHeight + TopRow; i < Console.WindowHeight - 2 + TopRow; i++)
-            {
-                Console.SetCursorPosition(0, i + 1);
-                Console.Write("".PadRight(Console.WindowWidth));
-            }
-
-            //DrawStats();
-
-            Console.SetCursorPosition(XOnLine - ShiftLenght, SelCharY1 - TopRow);
-            Console.CursorVisible = true;
-        }
-
-        public void DrawSelection(int editorHeight)
-        {
-            for (int i = 0; i < editorHeight; i++)
-            {
-                string selectedItem = "";
-
-                if (i + TopRow >= SelCharY1 - 1 && i + TopRow <= SelCharY2 - 1 || i + TopRow <= SelCharY1 - 1 && i + TopRow >= SelCharY2 - 1)
-                    Console.BackgroundColor = ConsoleColor.DarkCyan;
-
-                if (myLinesOfFileText[i + TopRow].Length <= ShiftLenght)
-                    selectedItem = "";
-                else
-                    selectedItem = myLinesOfFileText[i + TopRow].Substring(ShiftLenght, myLinesOfFileText[i + TopRow].Length - ShiftLenght);
-
-                if (i == SelCharY1 - 1 && SelCharX1 > selectedItem.Length)
-                    XOnLine = selectedItem.Length;
-
-                Console.SetCursorPosition(0, i + 1);
-
-                if (selectedItem.Length > Console.WindowWidth)
-                    Console.Write(selectedItem.Substring(0, Console.WindowWidth));
-                else
-                {
-                    Console.Write(selectedItem);
-                    Console.BackgroundColor = ConsoleColor.DarkBlue;
-                    Console.Write("".PadRight(Console.WindowWidth));
-                }
-
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
             }
         }
@@ -167,6 +260,13 @@ namespace MyMidnightCommander.Components.EditorComponents
                         SelCharY1++;
                         TopRow++;
                     }
+
+                    if (ShiftLenght > myLinesOfFileText[SelCharY1 - 1].Length)
+                    {
+                        ShiftLenght = myLinesOfFileText[SelCharY1 - 1].Length;
+                        SelCharX1 = myLinesOfFileText[SelCharY1 - 1].Length;
+                    }
+                        
                 }
             }
             else if (info.Key == ConsoleKey.UpArrow)
@@ -176,6 +276,13 @@ namespace MyMidnightCommander.Components.EditorComponents
                     SelCharY1--;
                     if (SelCharY1 - TopRow == 0)
                         TopRow--;
+
+                    if (ShiftLenght > myLinesOfFileText[SelCharY1 - 1].Length)
+                    {
+                        ShiftLenght = myLinesOfFileText[SelCharY1 - 1].Length;
+                        SelCharX1 = myLinesOfFileText[SelCharY1 - 1].Length;
+                    }
+                        
                 }
             }
             else if (info.Key == ConsoleKey.RightArrow)
@@ -184,7 +291,7 @@ namespace MyMidnightCommander.Components.EditorComponents
                 //{
 
                 if (XOnLine < SelCharX1)
-                    SelCharX1 = XOnLine + 1;
+                    SelCharX1 = XOnLine;
                 else
                     SelCharX1++;
 

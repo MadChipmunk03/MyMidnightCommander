@@ -35,7 +35,7 @@ namespace MyMidnightCommander.Dialogues.EditorDialogues
 
         public override void Draw()
         {
-            ChoiceBoxTemplate.Draw(Title, Text, Buttons, true, BtnsInRowTotalLenght, SelectedItem);
+            ChoiceBoxTemplate.Draw(Title, Text, Buttons, false, BtnsInRowTotalLenght, SelectedItem);
         }
 
         public override void ReadKey(ConsoleKeyInfo info)

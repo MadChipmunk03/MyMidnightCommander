@@ -16,15 +16,15 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
         {
             ConsoleColor myBackgroundColor = ConsoleColor.DarkRed;
             ConsoleColor myForeGroundColor = ConsoleColor.White;
-            ConsoleColor myBorderColor = ConsoleColor.Yellow;
-            ConsoleColor mySelectedFGC = ConsoleColor.Black;
+            ConsoleColor myTitleColor = ConsoleColor.Yellow;
+            ConsoleColor mySelectedBGC = ConsoleColor.Black;
 
             if (!isRed)
             {
-                myBackgroundColor = ConsoleColor.DarkCyan;
-                myForeGroundColor = ConsoleColor.White;
-                myBorderColor = ConsoleColor.Black;
-                mySelectedFGC = ConsoleColor.Black;
+                myBackgroundColor = ConsoleColor.Gray;
+                myForeGroundColor = ConsoleColor.Black;
+                myTitleColor = ConsoleColor.DarkBlue;
+                mySelectedBGC = ConsoleColor.DarkCyan;
             }
 
             int windowWidth = text.Length + 6;
@@ -84,22 +84,22 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
                     {
                         if (i == selectedItem)
                         {
-                            Console.BackgroundColor = myForeGroundColor;
-                            Console.ForegroundColor = mySelectedFGC;
+                            Console.BackgroundColor = mySelectedBGC;
+                            Console.ForegroundColor = myForeGroundColor;
                         }
 
                         Console.Write(buttons[i]);
                         Console.BackgroundColor = myBackgroundColor;
                         Console.ForegroundColor = myForeGroundColor;
                     }
-                    Console.Write("".PadRight((windowWidth - btnsInRowTotalLenght) / 2 - 2) + "│ ");
+                    Console.Write("".PadRight((windowWidth - btnsInRowTotalLenght) / 2 - 2 + btnsInRowTotalLenght % 2) + "│ ");
                 }
                 else if (dRow == 1)
                 {
                     Console.Write(" ┌");
                     for (int dChar = 2; dChar < windowWidth / 2 - (title.Length / 2) - 1 - (title.Length % 2) + (windowWidth % 2); dChar++)
                         Console.Write('─');
-                    Console.ForegroundColor = myBorderColor;
+                    Console.ForegroundColor = myTitleColor;
                     Console.Write($" {title} ");
                     Console.ForegroundColor = myForeGroundColor;
                     for (int dChar = 2; dChar < windowWidth / 2 - (title.Length / 2) - 1; dChar++)

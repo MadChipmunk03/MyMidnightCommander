@@ -23,7 +23,6 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
             Text = text;
 
             //formatting Buttons + getting their lenght when lined up in row
-            BtnsInRowTotalLenght = 0;
             for (int i = 0; i < Buttons.Length; i++)
             {
                 Buttons[i] = $" [{Buttons[i]}] "; //formatting

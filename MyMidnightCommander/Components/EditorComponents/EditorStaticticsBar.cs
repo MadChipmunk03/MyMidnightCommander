@@ -10,6 +10,8 @@ namespace MyMidnightCommander.Components.EditorComponents
     {
         public static void Draw(string fileName, int CharNumber, int topRow, int selY, int rowCount)
         {
+            string[] pathParts = fileName.Split('\\');
+            fileName = pathParts[pathParts.Length - 1];
             Console.SetCursorPosition(0, 0);
             Console.BackgroundColor = ConsoleColor.DarkCyan;
             Console.ForegroundColor = ConsoleColor.Black;
