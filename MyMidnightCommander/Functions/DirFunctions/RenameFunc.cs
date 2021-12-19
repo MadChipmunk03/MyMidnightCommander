@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace MyMidnightCommander.Functions
+namespace MyMidnightCommander.Functions.DirFunctions
 {
     public static class RenameFunc
     {

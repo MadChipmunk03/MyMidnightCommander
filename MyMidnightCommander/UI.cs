@@ -32,5 +32,12 @@ namespace MyMidnightCommander
             else
                 UsedDialog.ReadKey(info);
         }
+
+        public static void DrawResize()
+        {
+            Window.Draw();
+            if(DialogIsOn)
+                UsedDialog.Draw();
+        }
     }
 }

@@ -50,9 +50,9 @@
     <Compile Include="Dialogues\DirDialogues\RenameDialogue.cs" />
     <Compile Include="Dialogues\DirDialogues\CopyDialogue.cs" />
     <Compile Include="Dialogues\DirDialogues\DeleteDialogue.cs" />
-    <Compile Include="Dialogues\Rubbish\ChoiceBox.cs" />
     <Compile Include="Dialogues\Dialog.cs" />
     <Compile Include="Dialogues\DummyDialogue.cs" />
+    <Compile Include="Dialogues\EditorDialogues\EditorSaveDialogue.cs" />
     <Compile Include="Dialogues\InfoDialogue.cs" />
     <Compile Include="Dialogues\DialogTemplates\InputDialogueTemplate.cs" />
     <Compile Include="Components\FunctionKeysLabels.cs" />
@@ -60,12 +60,11 @@
     <Compile Include="Components\DirComponents\MyDirectory.cs" />
     <Compile Include="Components\DirComponents\MenuBar.cs" />
     <Compile Include="Dialogues\DirDialogues\MkDirDialogue.cs" />
-    <Compile Include="EditorFolder\Functions\Selection.cs" />
-    <Compile Include="EditorFolder\Functions\EditorSave.cs" />
-    <Compile Include="Functions\RenameFunc.cs" />
-    <Compile Include="Functions\MoveFunc.cs" />
-    <Compile Include="Functions\CopyFunc.cs" />
-    <Compile Include="Functions\DeleteFunc.cs" />
+    <Compile Include="Functions\EditorFunctions\EditorSave.cs" />
+    <Compile Include="Functions\DirFunctions\RenameFunc.cs" />
+    <Compile Include="Functions\DirFunctions\MoveFunc.cs" />
+    <Compile Include="Functions\DirFunctions\CopyFunc.cs" />
+    <Compile Include="Functions\DirFunctions\DeleteFunc.cs" />
     <Compile Include="Functions\FuncSupportMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +79,6 @@
   <ItemGroup>
     <Content Include="ToDo.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EditorFolder\Dailogues\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

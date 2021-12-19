@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using MyMidnightCommander.Components;
 using MyMidnightCommander.Dialogues.DirDialogues;
 using MyMidnightCommander.Dialogues;
 using MyMidnightCommander.Window;
+using MyMidnightCommander.Components.EditorComponents;
 
-namespace MyMidnightCommander
+namespace MyMidnightCommander.Components.DirComponents
 {
     public class MyDirectory : IComponents
     {
@@ -53,7 +53,7 @@ namespace MyMidnightCommander
             {
                 StartAtX = DirWidth;
                 DirWidth += Console.WindowWidth % 2;
-                DirPath = @"C:\Users\Péťa\Desktop";
+                DirPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 IsSelectedDir = false;
             }
             else

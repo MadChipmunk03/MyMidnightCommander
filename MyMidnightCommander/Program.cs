@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using MyMidnightCommander.Window;
-using MyMidnightCommander.Components;
+using MyMidnightCommander.Components.EditorComponents;
 using MyMidnightCommander.Dialogues;
 
 namespace MyMidnightCommander
@@ -16,10 +16,10 @@ namespace MyMidnightCommander
 
         static void Main(string[] args)
         {
-            /*ditor.FilePath = @"C:\Users\slachtapetr\Desktop\Readme.txt";
-            UI.Window = new EditorWindow();*/
+            Editor.FilePath = @"C:\Users\Péťa\Desktop\Readme.txt";
+            UI.Window = new EditorWindow();
 
-            UI.Window = new DirWindow();
+            //UI.Window = new DirWindow();
             UI.UsedDialog = new DummyDialogue();
 
             /*Thread t = new Thread(HandleResize);
@@ -34,9 +34,11 @@ namespace MyMidnightCommander
                 ConsoleKeyInfo info = Console.ReadKey();
                 UI.HandleKey(info);
             }
+
+            //t.Abort();
         }
 
-        static void HandleResize()
+        private static void HandleResize()
         {
             const int minWidth = 60;
 
@@ -53,8 +55,8 @@ namespace MyMidnightCommander
                     consoleWidth = Console.WindowWidth;
                     consoleHeight = Console.WindowHeight;
 
-                    if(consoleWidth >= minWidth)
-                        UI.Draw();
+                    if (consoleWidth >= minWidth)
+                        UI.DrawResize();
                 }
             }
         }

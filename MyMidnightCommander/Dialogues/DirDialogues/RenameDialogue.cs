@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyMidnightCommander.Dialogues.DialogTemplates;
-using MyMidnightCommander.Functions;
+using MyMidnightCommander.Functions.DirFunctions;
 
 namespace MyMidnightCommander.Dialogues.DirDialogues
 {

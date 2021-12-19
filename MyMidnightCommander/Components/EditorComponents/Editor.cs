@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using MyMidnightCommander.Window;
-using MyMidnightCommander.EditorFolder.Functions;
-using MyMidnightCommander.Dialogues;
+using MyMidnightCommander.Functions.EditorFunctions;
+using MyMidnightCommander.Dialogues.EditorDialogues;
 using MyMidnightCommander.Components.EditorComponents;
 
-namespace MyMidnightCommander.Components
+namespace MyMidnightCommander.Components.EditorComponents
 {
     public class Editor : IComponents
     {
@@ -85,7 +85,7 @@ namespace MyMidnightCommander.Components
                 DrawSelection(editorHeight);
             }
 
-            for(int i = editorHeight + TopRow; i < Console.WindowHeight - 2 + TopRow; i++)
+            for (int i = editorHeight + TopRow; i < Console.WindowHeight - 2 + TopRow; i++)
             {
                 Console.SetCursorPosition(0, i + 1);
                 Console.Write("".PadRight(Console.WindowWidth));
@@ -154,9 +154,9 @@ namespace MyMidnightCommander.Components
 
         public void ReadKey(ConsoleKeyInfo info)
         {
-            if(info.Key == ConsoleKey.DownArrow) //SelCharY1 == cursorY; TopRow == minusLine
+            if (info.Key == ConsoleKey.DownArrow) //SelCharY1 == cursorY; TopRow == minusLine
             {
-                if(SelCharY1 < myLinesOfFileText.Count)
+                if (SelCharY1 < myLinesOfFileText.Count)
                 {
                     if (SelCharY1 - TopRow < Console.WindowHeight - 2)
                     {
@@ -174,7 +174,7 @@ namespace MyMidnightCommander.Components
                 if (SelCharY1 != 1)
                 {
                     SelCharY1--;
-                    if(SelCharY1 - TopRow == 0)
+                    if (SelCharY1 - TopRow == 0)
                         TopRow--;
                 }
             }
@@ -184,7 +184,7 @@ namespace MyMidnightCommander.Components
                 //{
 
                 if (XOnLine < SelCharX1)
-                        SelCharX1 = XOnLine + 1;
+                    SelCharX1 = XOnLine + 1;
                 else
                     SelCharX1++;
 
@@ -195,7 +195,7 @@ namespace MyMidnightCommander.Components
             }
             else if (info.Key == ConsoleKey.LeftArrow)
             {
-                if(SelCharX1 != 0 && XOnLine != 0)
+                if (SelCharX1 != 0 && XOnLine != 0)
                 {
                     if (XOnLine < SelCharX1)
                         SelCharX1 = XOnLine - 1;
@@ -231,7 +231,7 @@ namespace MyMidnightCommander.Components
             } // Uložit
             else if (info.Key == ConsoleKey.F3)
             {
-                if(SelCharY2 == 0)
+                if (SelCharY2 == 0)
                 {
                     SelCharX2 = XOnLine;
                     SelCharY2 = SelCharY1;
@@ -241,7 +241,7 @@ namespace MyMidnightCommander.Components
                     SelCharX2 = 0;
                     SelCharY2 = 0;
                 }
-                
+
             } // označ
             else if (info.Key == ConsoleKey.F4)
             {
@@ -249,7 +249,7 @@ namespace MyMidnightCommander.Components
             } // Nahraď
             else if (info.Key == ConsoleKey.F5)
             {
-                
+
             } // Přesuň
             else if (info.Key == ConsoleKey.F6)
             {
@@ -257,7 +257,7 @@ namespace MyMidnightCommander.Components
             } // Hledat
             else if (info.Key == ConsoleKey.F7)
             {
-                myLinesOfFileText = Selection.Delete(myLinesOfFileText, SelCharX1, SelCharY1, SelCharX2, SelCharY2);
+                //myLinesOfFileText = Selection.Delete(myLinesOfFileText, SelCharX1, SelCharY1, SelCharX2, SelCharY2);
             } // Smazat
             else if (info.Key == ConsoleKey.F8)
             {
@@ -265,11 +265,19 @@ namespace MyMidnightCommander.Components
             } // Přesuň
             else if (info.Key == ConsoleKey.F9)
             {
-                
+
             } // Hl. nabídka
             else if (info.Key == ConsoleKey.F10)
             {
-                UI.Window = new DirWindow();
+                if (ChangesWereMade)
+                {
+                    UI.UsedDialog = new EditorSaveDialogue(FilePath, myLinesOfFileText);
+                    UI.DialogIsOn = true;
+                }
+                else
+                {
+                    UI.Window = new DirWindow();
+                }
                 
             } // odejít
             else if (info.Key == ConsoleKey.Enter)
@@ -293,12 +301,12 @@ namespace MyMidnightCommander.Components
         public void Save()
         {
             StreamWriter writer = new StreamWriter(FilePath);
-            foreach(string lineOfText in myLinesOfFileText)
+            foreach (string lineOfText in myLinesOfFileText)
             {
                 writer.WriteLine(lineOfText);
             }
             writer.Close();
-            UI.Window = new DirWindow();
+            ChangesWereMade = false;
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using MyMidnightCommander.Dialogues.DialogTemplates;
-using MyMidnightCommander.Functions;
+using MyMidnightCommander.Functions.DirFunctions;
 
 namespace MyMidnightCommander.Dialogues.DirDialogues
 {
     public class MkDirDialogue : Dialog
     {
         private string InputLabel { get; set; } = "Zadejte název složky";
-        private string InputVal { get; set; } = "Nová složka";
-        private string[] Buttons { get; set; } = { "OK", "Cancel" };
+        private string InputVal { get; set; } = "Nová položka";
+        private string[] Buttons { get; set; } = { "MkDir", "MkFile", "Cancel" };
         private string Path { get; set; }
         private int BtnsInRowTotalLenght { get; set; } = 0;
         public int SelectedItem { get; set; } = 0;
@@ -40,7 +40,15 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
         public override void ReadKey(ConsoleKeyInfo info)
         {
             if (info.Key == ConsoleKey.Enter)
-                CreateDir();
+            {
+                if (SelectedItem == 1)
+                    CreateDir();
+                else if (SelectedItem == 2)
+                    CreateFile();
+                else if (SelectedItem == 3)
+                    UI.UsedDialog = new DummyDialogue();
+            }
+                
             else if (info.Key == ConsoleKey.Backspace)
             {
                 if (InputVal.Length > 0)
@@ -54,23 +62,41 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
             }
             else if (info.Key == ConsoleKey.Escape)
                 UI.UsedDialog = new DummyDialogue();
-            else if (info.Key != ConsoleKey.F2) ; // filter out
+            else if (info.Key == ConsoleKey.F2) ; // filter out
             else
                 InputVal += info.KeyChar;
         }
 
         private void CreateDir()
         {
-            if (SelectedItem == 1)
+            if (InputVal.Contains('.'))
             {
-                DirectoryInfo myDirInfo = new DirectoryInfo(Path + "\\" + InputVal);
-                myDirInfo.Create();
-                UI.UsedDialog = new DummyDialogue();
+                string[] inputValParts = InputVal.Split('\\');
+                DirectoryInfo myDirectoryInfo = new DirectoryInfo(Path + "\\" + inputValParts[inputValParts.Length - 1]);
+                myDirectoryInfo.Create();
             }
-            else if (SelectedItem == 2)
+            else
             {
-                UI.UsedDialog = new DummyDialogue();
+                DirectoryInfo myDirectoryInfo = new DirectoryInfo(Path + "\\" + InputVal);
+                myDirectoryInfo.Create();
             }
+            UI.UsedDialog = new DummyDialogue();
+        }
+
+        private void CreateFile()
+        {
+            if (InputVal.Contains('\\'))
+            {
+                string[] inputValParts = InputVal.Split('\\');
+                FileInfo myFileInfo = new FileInfo(Path + "\\" + inputValParts[inputValParts.Length - 1]);
+                myFileInfo.Create();
+            }
+            else
+            {
+                FileInfo myFileInfo = new FileInfo(Path + "\\" + InputVal);
+                myFileInfo.Create();
+            }
+            UI.UsedDialog = new DummyDialogue();
         }
     }
 }

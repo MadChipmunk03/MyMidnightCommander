@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyMidnightCommander.Dialogues;
+using MyMidnightCommander.Components.DirComponents;
 
 namespace MyMidnightCommander.Window
 {
@@ -17,7 +18,7 @@ namespace MyMidnightCommander.Window
             MyDirectory leftDirectory = new MyDirectory(MyDirectory.LeftDirectory);
             components.Add(leftDirectory);
 
-            string[] fklLabels = { "POMOC!", "MkDir", "Rename" , "Move" , "Copy" , "Delete" , "Open" , "EXIT" };
+            string[] fklLabels = { "POMOC!", "Make", "Rename" , "Move" , "Copy" , "Delete" , "Open" , "EXIT" };
             FunctionKeysLabels myFKL = new FunctionKeysLabels(fklLabels);
             components.Add(myFKL);
 

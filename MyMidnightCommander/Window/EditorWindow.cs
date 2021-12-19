@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyMidnightCommander.Components;
+using MyMidnightCommander.Components.EditorComponents;
 
 namespace MyMidnightCommander.Window
 {

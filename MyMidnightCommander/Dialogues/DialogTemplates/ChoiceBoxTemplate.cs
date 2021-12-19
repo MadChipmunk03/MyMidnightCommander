@@ -12,8 +12,21 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
     {
         
 
-        public static void Draw(string title, string text, string[] buttons, int btnsInRowTotalLenght, int selectedItem)
+        public static void Draw(string title, string text, string[] buttons,bool isRed, int btnsInRowTotalLenght, int selectedItem)
         {
+            ConsoleColor myBackgroundColor = ConsoleColor.DarkRed;
+            ConsoleColor myForeGroundColor = ConsoleColor.White;
+            ConsoleColor myBorderColor = ConsoleColor.Yellow;
+            ConsoleColor mySelectedFGC = ConsoleColor.Black;
+
+            if (!isRed)
+            {
+                myBackgroundColor = ConsoleColor.DarkCyan;
+                myForeGroundColor = ConsoleColor.White;
+                myBorderColor = ConsoleColor.Black;
+                mySelectedFGC = ConsoleColor.Black;
+            }
+
             int windowWidth = text.Length + 6;
             int windowHeight = 6 + 1;
             
@@ -50,8 +63,8 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
             int startX = Console.WindowWidth / 2 - (windowWidth / 2);
             int startY = Console.WindowHeight / 2 - (windowHeight / 2) - 2; //-2 for esthetics
 
-            Console.BackgroundColor = ConsoleColor.DarkRed;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = myBackgroundColor;
+            Console.ForegroundColor = myForeGroundColor;
 
             Console.CursorVisible = false;
             Console.SetCursorPosition(startX, startY);
@@ -71,13 +84,13 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
                     {
                         if (i == selectedItem)
                         {
-                            Console.BackgroundColor = ConsoleColor.White;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = myForeGroundColor;
+                            Console.ForegroundColor = mySelectedFGC;
                         }
 
                         Console.Write(buttons[i]);
-                        Console.BackgroundColor = ConsoleColor.DarkRed;
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = myBackgroundColor;
+                        Console.ForegroundColor = myForeGroundColor;
                     }
                     Console.Write("".PadRight((windowWidth - btnsInRowTotalLenght) / 2 - 2) + "│ ");
                 }
@@ -86,9 +99,9 @@ namespace MyMidnightCommander.Dialogues.DialogTemplates
                     Console.Write(" ┌");
                     for (int dChar = 2; dChar < windowWidth / 2 - (title.Length / 2) - 1 - (title.Length % 2) + (windowWidth % 2); dChar++)
                         Console.Write('─');
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = myBorderColor;
                     Console.Write($" {title} ");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = myForeGroundColor;
                     for (int dChar = 2; dChar < windowWidth / 2 - (title.Length / 2) - 1; dChar++)
                         Console.Write('─');
                     Console.Write("┐ ");

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace MyMidnightCommander.Functions
+namespace MyMidnightCommander.Functions.DirFunctions
 {
-    public static class MoveFunc
+    public static class CopyFunc
     {
-        public static void HandleMove(string source, string destination, bool isFolder)
+        public static void HandleCopy(string source, string destination, bool isFolder)
         {
             string[] sourceParts = source.Split('\\');
             int sourceTrimLenght = 0;
@@ -20,19 +20,19 @@ namespace MyMidnightCommander.Functions
             {
                 DirectoryInfo dir = new DirectoryInfo(source);
 
-                FuncSupportMethods.GoThroughDirectory(dir, sourceTrimLenght, destination, "move");
+                FuncSupportMethods.GoThroughDirectory(dir, sourceTrimLenght, destination, "copy");
 
                 DirectoryInfo destinationDir2 = new DirectoryInfo(destination + sourceParts[sourceParts.Length - 1]);
                 if (!destinationDir2.Exists)
                     destinationDir2.Create();
 
                 foreach (FileInfo file in dir.GetFiles())
-                    file.MoveTo(destination + file.FullName.Substring(sourceTrimLenght, file.FullName.Length - sourceTrimLenght));
+                    file.CopyTo(destination + file.FullName.Substring(sourceTrimLenght, file.FullName.Length - sourceTrimLenght));
             }
             else
             {
                 FileInfo myFile = new FileInfo(source);
-                myFile.MoveTo(destination);
+                myFile.CopyTo(destination);
             }
         }
     }

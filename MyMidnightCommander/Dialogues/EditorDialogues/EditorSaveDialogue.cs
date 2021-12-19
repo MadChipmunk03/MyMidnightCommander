@@ -4,23 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyMidnightCommander.Dialogues.DialogTemplates;
-using MyMidnightCommander.Functions.DirFunctions;
+using MyMidnightCommander.Functions.EditorFunctions;
+using MyMidnightCommander.Window;
 
-namespace MyMidnightCommander.Dialogues.DirDialogues
+namespace MyMidnightCommander.Dialogues.EditorDialogues
 {
-    public class DeleteDialogue : Dialog
+    public class EditorSaveDialogue : Dialog
     {
-        private string Title { get; set; } = "Smazat";
-        private string Text { get; set; }
-        private string[] Buttons { get; set; } = { "Ok", "Cancel" };
+        private string Title { get; set; } = "Uložit?";
+        private string Text { get; set; } = "Soubor není uložený. Přejete si ho uložit?";
+        private string[] Buttons { get; set; } = { "Uložit", "Zahodit", "Zpět" };
         private string Path { get; set; }
-        private bool IsFolder { get; set; }
         private int BtnsInRowTotalLenght { get; set; } = 0;
-        public int SelectedItem { get; set; } = 0;
+        private int SelectedItem { get; set; } = 0;
+        private List<string> LinesOfText = new List<string>();
 
-        public DeleteDialogue(string text, string path, bool isFolder)
+        public EditorSaveDialogue(string path, List<string> linesOfText)
         {
-            Text = text;
+            Path = path;
+            LinesOfText = linesOfText;
 
             //formatting Buttons + getting their lenght when lined up in row
             BtnsInRowTotalLenght = 0;
@@ -29,9 +31,6 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
                 Buttons[i] = $" [{Buttons[i]}] "; //formatting
                 BtnsInRowTotalLenght += Buttons[i].Length; // Buttons lenght in row
             }
-
-            Path = path;
-            IsFolder = isFolder;
         }
 
         public override void Draw()
@@ -54,8 +53,14 @@ namespace MyMidnightCommander.Dialogues.DirDialogues
             else if (info.Key == ConsoleKey.Enter) //last option isn't selected
             {
                 if (SelectedItem == 0)
-                    DeleteFunc.HandleDelete(Path, IsFolder);
-                else if (SelectedItem == 1);
+                {
+                    EditorSave.Save(Path, LinesOfText);
+                }
+                else if (SelectedItem == 1)
+                {
+                    UI.Window = new DirWindow();
+                }
+                else if (SelectedItem == 2);
 
                 UI.UsedDialog = new DummyDialogue();
             }
