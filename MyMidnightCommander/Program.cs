@@ -16,10 +16,10 @@ namespace MyMidnightCommander
 
         static void Main(string[] args)
         {
-            Editor.FilePath = @"C:\Users\Péťa\Desktop\Readme.txt";
-            UI.Window = new EditorWindow();
+            /*Editor.FilePath = @"C:\Users\Péťa\Desktop\Readme.txt";
+            UI.Window = new EditorWindow();*/
 
-            //UI.Window = new DirWindow();
+            UI.Window = new DirWindow();
             UI.UsedDialog = new DummyDialogue();
 
             /*Thread t = new Thread(HandleResize);
